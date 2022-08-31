@@ -1,1 +1,1 @@
-web: gunicorn smartmecanico:app --log-file=-
+web: gunicorn smartmecanico.wsgi
