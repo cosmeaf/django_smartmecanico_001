@@ -1,13 +1,36 @@
-from .models import Address
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
+from .models import Address
+from .serializers import AddressSerializer, AddressDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import AddressSerializer
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+# Create your views here.
+
+
+class AddressModelViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == "list" or self.action == "retrieve":
+            return AddressSerializer
+        else:
+            return AddressDetailSerializer
+
+    def get_queryset(self, pk=None):
+        user = self.request.user
+        if user.is_superuser:
+            return self.queryset
+        else:
+            return self.queryset.filter(user=user, is_active=True)
 
 # ViewSets define the view behavior.
 
 
-class AddressViewSet(viewsets.GenericViewSet):
+class AddressGenericViewSet(viewsets.GenericViewSet):
     """ ViewSets Version 1 """
     model = Address
     serializer_class = AddressSerializer
