@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AppHourConfig(AppConfig):
+class AppServicesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app_hour'
+    name = 'app_services'

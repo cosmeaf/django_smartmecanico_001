@@ -1,7 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from .models import Schedule
-from .serializers import ScheduleSerializer, ScheduleDetailSerializer
+from .models import Vehicle
+from .serializers import VehicleSerializer, VehicleDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -10,15 +10,15 @@ User = get_user_model()
 # Create your views here.
 
 
-class ScheduleModelViewSet(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all()
+class VehicleModelViewSet(viewsets.ModelViewSet):
+    queryset = Vehicle.objects.all()
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == "list" or self.action == "retrieve":
-            return ScheduleSerializer
+            return VehicleSerializer
         else:
-            return ScheduleDetailSerializer
+            return VehicleDetailSerializer
 
     def get_queryset(self, pk=None, *args, **kwargs):
         user = self.request.user

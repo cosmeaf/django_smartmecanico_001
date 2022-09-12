@@ -1,4 +1,5 @@
-from stdimage import StdImageField
+import uuid
+import os
 from django.db import models
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -23,9 +24,16 @@ class Base(models.Model):
 
 
 class Service(Base):
-    image = StdImageField(upload_to='icon', blank=True, delete_orphans=True)
-    name = models.CharField('Titulo', max_length=100, editable=True)
-    description = models.TextField('Descrição', editable=True)
+    def get_file_path(instance, filename):
+        ext = filename.split('.')[-1]
+        filename = "%s.%s" % (uuid.uuid4(), ext)
+        return os.path.join('icon', filename)
+
+    image = models.ImageField(
+        'Imagem', upload_to=get_file_path, blank=True, null=True)
+    name = models.CharField('Titulo', max_length=255, editable=True)
+    description = models.TextField(
+        'Descrição', editable=True)
 
     class Meta:
         db_table = 'tbl_service'

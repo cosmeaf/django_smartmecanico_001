@@ -1,21 +1,20 @@
-from .models import Schedule
+from .models import Service
 from rest_framework import serializers
 
 
-class ScheduleSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
+class ServiceSerializer(serializers.ModelSerializer):
+    # user = serializers.StringRelatedField()
 
     class Meta:
-        model = Schedule
-        fields = '__all__'
-        depth = 1
+        model = Service
         extra_kwargs = {'user': {'required': True}}
+        exclude = ['user']
 
 
-class ScheduleDetailSerializer(serializers.ModelSerializer):
+class ServiceDetailSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
-        model = Schedule
+        model = Service
         fields = '__all__'
         extra_kwargs = {'user': {'required': True}}

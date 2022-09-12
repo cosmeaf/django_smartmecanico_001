@@ -25,8 +25,8 @@ class HourAvailable(Base):
 
     class Meta:
         db_table = 'tbl_hour'
-        verbose_name = 'HourAvailable'
-        verbose_name_plural = 'HourAvailables'
+        verbose_name = 'Hour Available'
+        verbose_name_plural = 'Hour Availables'
 
     def __str__(self):
         return f'{self.hourAvailable}'

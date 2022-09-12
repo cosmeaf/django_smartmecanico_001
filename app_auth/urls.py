@@ -1,9 +1,12 @@
 from django.urls import path
+from rest_framework import routers
+from .views import UserRegister, UserLogin, RecoveryPassword
+#
+router = routers.SimpleRouter()
+router.register(r'register', UserRegister, basename='register')
+router.register(r'login', UserLogin, basename='login')
+router.register(r'recovery', RecoveryPassword, basename='recovery')
+#
+urlpatterns = []
 
-from .views import RegisterAPIView, LoginAPIView
-
-
-urlpatterns = [
-    path('register/', RegisterAPIView.as_view(), name='register'),
-    path('login/', LoginAPIView.as_view(), name='login')
-]
+urlpatterns += router.urls
